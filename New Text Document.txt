@@ -1,0 +1,127 @@
+Step-by-step guide
+
+    Download and install Tomcat v9 on your machine
+    Create your Datahub directory anywhere you want
+        Create sub directories for configuration files and datahub extensions
+    Place datahub-webapp.war in your Datahub directory
+    Copy datahub extensions which are necessary for your integration scenario
+    Create and modify configuration files
+        local.properties
+        encryption-key.txt
+        logback.xml
+        datahub-webapp.xml
+
+Download and install Tomcat v9 on your machine
+
+Download Tomcat v9 and extract it into your <TOMCAT_HOME> directory.
+
+https://tomcat.apache.org/download-90.cgi
+Create your Datahub directory anywhere you want
+
+In this example, create these directory structures.
+
+    datahub6.2/
+        datahub/
+            conf/
+            extensions/
+
+Place datahub-webapp.war in your Datahub directory
+
+Copy datahub-webapp.war from your Hybris Commerce to your datahub directory. File is included in <HYBRIS_HOME>/bin/ext-integration/datahub/web-app.
+Copy datahub extensions which are necessary for your integration scenario
+
+Copy datahub extensions from your Hybris Commerce to your datahub directory. File is included in <HYBRIS_HOME>/bin/ext-integration/datahub/extensions.
+
+In this article, I have copied required extensions for Hybris Marketing integration.
+
+    datahub6.2/
+        datahub/
+            extensions/
+                dependencies/
+                sap/ (Copied only these two extensions)
+                    party-canonical-x.x.jar
+                    product-canonical-x.x.jar
+                y2ysync-datahub-ext/
+                ymkt/
+
+Create and modify configuration files
+local.properties
+Create local.properties file in your datahub/conf directory. Here is example of ymkt/y2ysync settings.
+
+###############################################################################
+## datahub instance settings
+###############################################################################
+#basic configuration
+kernel.autoInitMode=create-drop
+datahub.encryption.key.path=encryption-key.txt
+datahub.server.url=http://<your_datahub_server>:8080/datahub-webapp/v1
+#Datahub local authentication
+datahub.security.basic.admin.user=datahub
+datahub.security.basic.admin.password=datahub
+#export settings for yCommerce
+datahub.extension.exportURL=http://<your_commerce_server>:9001/datahubadapter
+datahub.extension.userName=admin
+datahub.extension.password=nimda
+
+###############################################################################
+## SAP integration
+###############################################################################
+#target system: yMarketing
+ymkt-target.exportURL=http://<your_ymarketing_server>/sap/opu/odata/sap/cuan_import_srv/
+ymkt-target.userName=<ymarketing_user>
+ymkt-target.password=<ymarketing_password>
+encryption-key.txt
+Create your encryption key and store it into datahub/conf directory. This help page shows how to create encryption key.
+https://help.hybris.com/6.1.0/hcd/c27616c45af444529f6b3a3c64b57230.html
+logback.xml
+By default, Datahub generates lots of debug logs. You can configure log levels by modifying logback.xml.
+Download logback.xml file from Hybris help site, then store into datahub/conf directory.
+https://help.hybris.com/6.2.0/hcd/8ac5f84bad6d48a7ba9f71a1271d700d.html
+Modify xml file like below.
+
+...
+
+<logger name="com.hybris.datahub" level="info" />
+
+...
+datahub-webapp.xml
+Create your Tomcat context.xml named datahub-webapp.xml. At least these informations must be specified. Note that, all file and directory paths should be specified as absolute paths.
+Context.xml file have to be placed in Tomcat's configuration directory <TOMCAT_HOME>/conf/Catalina/localhost.
+
+For Linux or Mac users
+It is nice solution to locate this file in your datahub/conf directory then make a symbolic link in Tomcat configuration directory.
+
+    cd <TOMCAT_HOME>/conf/Catalina/localhost
+
+    ln -s <path_to_your_datahub>/conf/datahub-webap.xml .
+
+<Context 
+    docBase="<path_to_datahub>/datahub6.2/datahub/datahub-webapp-6.2.0.0-RC4.war"
+    reloadable="true">
+    <Resources cacheMaxSize="131072">
+        <PreResources
+            base="<path_to_datahub>/datahub6.2/datahub/conf/"
+            className="org.apache.catalina.webresources.DirResourceSet"
+            webAppMount="/WEB-INF/classes" />
+        <PostResources
+            base="<path_to_datahub>/datahub6.2/datahub/extensions/dependencies/"
+            className="org.apache.catalina.webresources.DirResourceSet"
+            webAppMount="/WEB-INF/lib" />
+        <PostResources
+            base="<path_to_datahub>/datahub6.2/datahub/extensions/y2ysync-datahub-ext/"
+            className="org.apache.catalina.webresources.DirResourceSet"
+            webAppMount="/WEB-INF/lib" />
+        <PostResources
+            base="<path_to_datahub>/datahub6.2/datahub/extensions/sap/"
+            className="org.apache.catalina.webresources.DirResourceSet"
+            webAppMount="/WEB-INF/lib" />
+        <PostResources
+            base="<path_to_datahub>/datahub6.2/datahub/extensions/ymkt/"
+            className="org.apache.catalina.webresources.DirResourceSet"
+            webAppMount="/WEB-INF/lib" />
+    </Resources>
+</Context>
+
+Conclusion
+
+Finally, here is directory structure of Datahub 6.2 on Tomcat v9. Start your Tomcat then play with Datahub.

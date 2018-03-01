@@ -1,0 +1,65 @@
+    <!--<?xml version='1.0' encoding='utf-8'?>
+    
+      Licensed to the Apache Software Foundation (ASF) under one or more
+      contributor license agreements.  See the NOTICE file distributed with
+      this work for additional information regarding copyright ownership.
+      The ASF licenses this file to You under the Apache License, Version 2.0
+      (the "License"); you may not use this file except in compliance with
+      the License.  You may obtain a copy of the License at
+     
+          http://www.apache.org/licenses/LICENSE-2.0
+     
+      Unless required by applicable law or agreed to in writing, software
+      distributed under the License is distributed on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+      See the License for the specific language governing permissions and
+      limitations under the License.
+    -->
+    <!-- The contents of this file will be loaded for each web application -->
+	
+	
+<!-- 	
+	
+    <Context antiJARLocking="true"
+		 docBase="D:/opt/datahub/webapp/datahub-webapp.war" 
+    	 reloadable="true">
+             <Loader className="org.apache.catalina.loader.VirtualWebappLoader"
+    	  virtualClasspath=
+    	  "D:/opt/datahub/config/; 
+		    D:/opt/datahub/extensions/*.jar"/>
+	</Context>
+	
+	 -->
+	
+	<Context
+    docBase="F:/HYBRIS/hybris-datahub/opt/datahub/webapp/datahub-webapp.war"
+    reloadable="true">
+    <Resources cacheMaxSize="131072">
+<!--        <PreResources
+            className="org.apache.catalina.webresources.DirResourceSet"
+			base="F:/HYBRIS/hybris-datahub/opt/datahub/config/"
+            webAppMount="/WEB-INF/classes" />  -->
+			
+         <PostResources
+            base="F:/HYBRIS/hybris-datahub/opt/datahub/extensions/"
+            className="org.apache.catalina.webresources.DirResourceSet"
+            webAppMount="/WEB-INF/lib" />
+			
+			
+      <!--   <PostResources
+            base="<path_to_datahub>/datahub6.2/datahub/extensions/y2ysync-datahub-ext/"
+            className="org.apache.catalina.webresources.DirResourceSet"
+            webAppMount="/WEB-INF/lib" />
+        <PostResources
+            base="<path_to_datahub>/datahub6.2/datahub/extensions/sap/"
+            className="org.apache.catalina.webresources.DirResourceSet"
+            webAppMount="/WEB-INF/lib" />
+        <PostResources
+            base="<path_to_datahub>/datahub6.2/datahub/extensions/ymkt/"
+            className="org.apache.catalina.webresources.DirResourceSet"
+            webAppMount="/WEB-INF/lib" /> -->
+    </Resources>
+</Context>
+	
+	
+	
