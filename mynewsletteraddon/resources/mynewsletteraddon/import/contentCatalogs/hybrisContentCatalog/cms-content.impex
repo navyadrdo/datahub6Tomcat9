@@ -1,0 +1,85 @@
+$contentCatalog=hybrisContentCatalog
+$contentCatalogName=Hybris Content Catalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$productCatalog=hybrisProductCatalog
+$productCatalogName=Hybris Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$picture=media(code, $contentCV)                   ;
+$image=image(code, $contentCV)                     ;
+$media=media(code, $contentCV)                     ;
+$page=page(uid, $contentCV)                        ;
+$contentPage=contentPage(uid, $contentCV)          ;
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+#$siteResource=jar:de.hybris.merchandise.initialdata.constants.MerchandiseInitialDataConstants&/merchandiseinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+#$productResource=jar:de.hybris.merchandise.initialdata.constants.MerchandiseInitialDataConstants&/merchandiseinitialdata/import/sampledata/productCatalogs/$productCatalog
+#$jarResourceCms=jar:de.hybris.merchandise.initialdata.constants.MerchandiseInitialDataConstants&/merchandiseinitialdata/import/sampledata/cockpits/cmscockpit
+$siteResource=jar:com.twc.constants.MynewsletteraddonConstants&/mynewsletteraddon/import/contentCatalogs/hybrisContentCatalog
+
+
+
+
+
+#IMPEX'S FOR MY ACCOUNT -----> NEWS LETTER
+
+#core data here.
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];previewImage(code, $contentCV)[default='ContentPageModel__function_preview']
+;;news-letter;News Letter Subscription Page;AccountPageTemplate;news-letter
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent                     ; $contentCV[unique=true]    ; uid[unique=true]                                     ; name                                                                                                                                                                                                           ; url                                                                                                                                                                                                                                          ; &linkRef                                                                                                                                                                         ; &componentRef                            ; target(code)[default='sameWindow']          ; $category                    ; $product           ;
+;;AccountNewsLetterLink;AccountNewsLetterLink;/my-account/subcriptionInfo;AccountNewsLetterLink;AccountNewsLetterLink;;;;
+
+
+#newsletter
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;children(uid,$contentCV)
+;root;;root;;
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);links(&linkRef)[mode=append];&nodeRef
+;SiteRootNode;;SiteRootNode;root;;SiteRootNode
+;AccountNewsLetterNavNode;;News letter node;SiteRootNode;AccountNewsLetterLink;AccountNewsLetterNavNode
+#;AccountLeftNavNode;;Your Account;SiteRootNode;AccountProfileLink,AccountAddressBookLink,AccountPaymentDetailsLink,AccountOrderHistoryLink;AccountLeftNavNode
+;AccountLeftNavNode;;Your Account;SiteRootNode;AccountNewsLetterLink;AccountLeftNavNode
+
+# Navigation Bar Component
+
+INSERT_UPDATE AccountNavigationComponent;$contentCV[unique=true];uid[unique=true];name;navigationNode(&nodeRef);styleClass;&componentRef
+;;AccountNewsLetterNavigationComponent;Account News Letter Navigation Component;AccountNewsLetterNavNode;;AccountNewsLetterNavigationComponent
+;;AccountLeftNavigationComponent;Account Left Navigation Component;AccountLeftNavNode;;AccountLeftNavigationComponent
+
+# Account Navigation Bar Component
+INSERT_UPDATE AccountNavigationCollectionComponent;$contentCV[unique=true];uid[unique=true];name;components(uid, $contentCV);&componentRef
+#newsletter
+;;AccountHomepageComponent;Account Homepage Component;AccountProfileNavigationComponent,AccountAddressBookNavigationComponent,AccountPaymentDetailsNavigationComponent,AccountOrderHistoryNavigationComponent,AccountNewsLetterNavigationComponent;AccountHomepageComponent
+# Navigation Collection
+# Category Pages
+
+ INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV);&componentRef
+# unders stand the difference  "AccountNewsLettersComponent,AccountNewsLetterNavigationComponent"
+;;AccountNewsLettersComponent;Account News Letter component;accountSubscribeToNewsletterComponent.jsp;;AccountNewsLettersComponent
+
+#/WEB-INF/views/addons/mynewsletteraddon/desktop/cms/
+ 
+
+INSERT_UPDATE NewsLetterFormComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef;
+;;NewsLetterFormFooterComponent;NewsLetterFormFooterComponent;NewsLetterFormFooterComponent;
+
+
+
+
+###### Account News Letter Subscription 
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SideContent-newsletter;Side Content Slot for My Account Order History;true;AccountLeftNavigationComponent;;;
+;;BodyContent-newsletter;Body Content Slot for My Account Order History;true;AccountNewsLettersComponent;;;
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='news-letter'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-newsletter;SideContent;;SideContent-newsletter;;;
+;;BodyContent-newsletter;BodyContent;;BodyContent-newsletter;;;
+
+
+INSERT_UPDATE NewsLetterFormComponent;$contentCV[unique=true];uid[unique=true];name;&componentRef;
+;;NewsLetterFormFooterComponent;NewsLetterFormFooterComponent;NewsLetterFormFooterComponent;
+
+# Content Slots
+INSERT_UPDATE ContentSlot                          ; $contentCV[unique=true]    ; uid[unique=true]                                     ; cmsComponents(&componentRef)[mode=append]
+                                                   ;                            ; FooterSlot                                           ; NewsLetterFormFooterComponent

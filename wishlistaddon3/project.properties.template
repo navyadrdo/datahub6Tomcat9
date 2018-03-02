@@ -1,0 +1,35 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform 
+# 
+# Copyright (c) 2000-2015 hybris AG
+# All rights reserved.
+#  
+# This software is the confidential and proprietary information of hybris 
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with hybris.
+#
+#  
+# -----------------------------------------------------------------------
+
+# you can put key/value pairs here.
+# Use Config.getParameter(..) to retrieve the values during runtime.
+
+wishlistaddon3.key=value
+
+# Specifies the location of the spring context file added automatically to the global platform application context.
+wishlistaddon3.application-context=wishlistaddon3-spring.xml
+
+yacceleratorstorefront.additionalWebSpringConfigs.wishlistaddon3=classpath:/wishlistaddon3/web/spring/wishlistaddon3-web-spring.xml
+yb2bacceleratorstorefront.additionalWebSpringConfigs.wishlistaddon3=classpath:/wishlistaddon3/web/spring/wishlistaddon3-web-spring.xml
+
+storefront.supportedUiExperienceLevels.electronics=DESKTOP,MOBILE
+storefront.supportedUiExperienceLevels.apparel-uk=DESKTOP,MOBILE
+storefront.supportedUiExperienceLevels.apparel-de=DESKTOP,MOBILE
+storefront.supportedUiExperienceLevels.powertools=DESKTOP
+
+
+wishlistaddon3.javascript.paths.desktop=/desktop/common/js/wishlistaddon3.js
+wishlistaddon3.javascript.paths.mobile=/desktop/common/js/wishlistaddon3.js
+wishlistaddon3.css.paths.desktop=/desktop/common/css/wishlistaddon3.css
+wishlistaddon3.css.paths.mobile=/mobile/common/css/wishlistaddon3.css

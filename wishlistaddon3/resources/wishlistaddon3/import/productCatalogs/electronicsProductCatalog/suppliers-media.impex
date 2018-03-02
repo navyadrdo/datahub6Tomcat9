@@ -1,0 +1,6 @@
+$productCatalog=electronicsProductCatalog
+$productCatalogName=Electronics Product Catalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$superCategories=superCategories(code, $catalogVersion)
+$thumbnail=thumbnail(code, $catalogVersion)
+$siteResource=jar:com.twc.wishlist.addon.constants.Wishlistaddon3Constants&/wishlistaddon3/import/productCatalogs/$productCatalog

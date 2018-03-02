@@ -1,0 +1,108 @@
+#
+# Import the CMS content for the Euronics site emails
+#
+#$contentCatalog=hybrisContentCatalog
+#$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+#$wideContent=CMSImageComponent,BannerComponent
+
+# Import modulegen config properties into impex macros
+#UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+#$jarResourceCms=$config-jarResourceCmsValue
+#$emailPackageName=$config-emailContextPackageName
+
+# Email page Template
+#INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+#;;NewsletterSubsConfirmationEmailTemplate;NewsLetterSubscriptionEmailTemplate;true;newsletterSubsConfirmationEmail;euronics_Email_Newsletter_Subs_Confirmation_Subject;euronics_Email_Newsletter_Subs_Confirmation_Body;EmailPage
+# Templates for CMS Cockpit Page Edit
+#UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+#;;NewsletterSubsConfirmationEmailTemplate;$jarResourceCms/structure-view/structure_newsletterSubsConfirmationEmailTemplate.vm
+
+
+#INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='NewsletterSubsConfirmationEmailTemplate'];validComponentTypes(code)
+#;SiteLogo;;;logo
+#;TopContent;;$wideContent;
+#;BottomContent;;$wideContent;
+
+
+
+# Create Content Slots
+#INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
+#;;EmailTopSlot;Default Email Top Slot;true
+#;;EmailBottomSlot;Default Email Bottom Slot;true
+#;;EmailSiteLogoSlot;Default Email Site Slot;true
+
+
+
+
+
+#INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='NewsletterSubsConfirmationEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+#;;SiteLogo-NewsletterSubsConfirmationEmail;SiteLogo;;EmailSiteLogoSlot;true
+#;;TopContent-NewsletterSubsConfirmationEmail;TopContent;;EmailTopSlot;true
+#;;BottomContent-NewsletterSubsConfirmationEmail;BottomContent;;EmailBottomSlot;true
+
+# Email Pages
+#INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
+#;;NewsletterSubsConfirmationEmail;Newsletter Subs Confirmation Email;NewsletterSubsConfirmationEmailTemplate;true;
+
+# CMS components velocity templates
+#INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+#;euronics-CMSImageComponent-template;java.util.Map
+#;euronics-BannerComponent-template;java.util.Map
+#;euronics-SimpleBannerComponent-template;java.util.Map
+#;euronics-CMSLinkComponent-template;java.util.Map
+#;euronics-CMSParagraphComponent-template;java.util.Map
+
+# Email velocity templates
+#INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+#;euronics_Email_Newsletter_Subs_Confirmation_Subject;$emailPackageName.NewsletterSubsConfirmationEmailContext
+#;euronics_Email_Newsletter_Subs_Confirmation_Body;$emailPackageName.NewsletterSubsConfirmationEmailContext
+
+
+
+
+# Preview Image for use in the CMS Cockpit
+#INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true];mime;realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true]
+#;;EmailPageModel_preview;text/gif;EmailPageModel_preview.gif;$jarResourceCms/preview-images/EmailPageModel_preview.gif
+
+#UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];previewImage(code, $contentCV)
+#;;NewsletterSubsConfirmationEmail;EmailPageModel_preview
+
+
+
+$contentCatalog=hybrisContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$wideContent=CMSImageComponent,BannerComponent
+# Import config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms=$config-jarResourceCmsValue
+$emailPackageName=$config-NLSemailContextPackageName
+# Email page Template
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+;;NewsLetterSubscriptionEmailTemplate;News Letter Subscription Email Template;true;newsLetterSubScriptionEmail;hybris_Email_Newsletter_Subs_Confirmation_Subject;hybris_Email_Newsletter_Subs_Confirmation_Body;EmailPage
+
+UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;;NewsLetterSubscriptionEmailTemplate;$jarResourceCms/structure-view/structure_customerRegistrationEmailTemplate.vm
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='NewsLetterSubscriptionEmailTemplate'];validComponentTypes(code)
+;SiteLogo;;;logo
+;TopContent;;$wideContent;
+;BottomContent;;$wideContent;
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='NewsLetterSubscriptionEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-newsLetterSubScriptionEmail;SiteLogo;;EmailSiteLogoSlot;true
+;;TopContent-newsLetterSubScriptionEmail;TopContent;;EmailTopSlot;true
+;;BottomContent-newsLetterSubScriptionEmail;BottomContent;;EmailBottomSlot;true
+
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
+;;newsLetterSubScriptionEmail;News Letter Subscription Email;NewsLetterSubscriptionEmailTemplate;true;
+
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;hybris_Email_Newsletter_Subs_Confirmation_Subject;$emailPackageName.NewsLetterSubscriptionEmailContext
+;hybris_Email_Newsletter_Subs_Confirmation_Body;$emailPackageName.NewsLetterSubscriptionEmailContext
+
+UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];previewImage(code, $contentCV)
+;;newsLetterSubScriptionEmail;EmailPageModel_preview
+
+
+
+

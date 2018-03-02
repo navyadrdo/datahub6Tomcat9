@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2015 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/> <!-- 
+<context:component-scan base-package="com.twc.wishlist.addon"></context:component-scan>
+ -->
+  <context:component-scan base-package="com.twc.wishlist" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
+
+	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
+	<bean id="defaultWishlistaddon3JavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
+		<property name="addOnName" value="wishlistaddon3"/>
+	</bean>
+
+	<bean id="defaultWishlistaddon3BeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee" class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+		<property name="messageSource" ref="defaultWishlistaddon3JavaScriptMessageResourceAccessor"/>
+	</bean>
+
+	<bean id="getWishlistaddon3BeforeViewHandler" parent="beforeViewHandlerAdapter">
+		<property name="adaptee">
+			<ref bean="defaultWishlistaddon3BeforeViewJsPropsHandlerAdaptee"/>
+		</property>
+	</bean>
+	<bean id="Wishlistaddon3BeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList" parent="listMergeDirective">
+		<property name="add" ref="getWishlistaddon3BeforeViewHandler"/>
+	</bean>
+	
+	
+	
+	
+<bean id="addToWishListComponentRenderer" parent="addOnJspIncludeCMSComponentRenderer" />
+       
+<bean id="wishListComponentRendererMapping" parent="addonCmsComponentRendererMapping">
+        <property name="typeCode" value="ProductAddToWishlistComponent" />
+        <property name="renderer" ref="addToWishListComponentRenderer" />
+</bean>
+
+
+
+ <bean id="wishlist2EntryDataPopulator"  class="com.twc.wishlist.addon.populator.Wishlist2EntryDataPopulator">
+        <property name="productConverter" ref="productConverter"/>
+        <property name="stockConverter" ref="stockConverter"/>
+        <property name="productConfiguredPopulator" ref="productConfiguredPopulator"/>
+    </bean> 
+
+	
+	    <bean id="wishlist2EntryDataConverter" 
+          parent="abstractPopulatingConverter">
+        <property name="targetClass" value="com.twc.wishlist.addon.data.Wishlist2EntryData"/>
+         <property name="populators">
+            <list>
+                <ref bean="wishlist2EntryDataPopulator"/>
+          
+            </list>
+       </property>
+    </bean>
+	
+
+
+<!-- <alias alias="wishlistService" name="defaultWishlistService" />
+	<bean id="defaultWishlistService" class="de.hybris.platform.wishlist2.impl.DefaultWishlist2Service" parent="abstractBusinessService"
+		scope="tenant">
+		<property name="wishlistDao" ref="wishlistDao"/>
+		<property name="saveAnonymousWishlists" value="false"/>
+	</bean>
+
+	<alias alias="wishlistDao" name="defaultWishlistDao" />
+	<bean id="defaultWishlistDao" class="de.hybris.platform.wishlist2.impl.daos.impl.DefaultWishlist2Dao" parent="abstractItemDao"
+		scope="tenant" />
+
+ -->
+
+<!-- <alias alias="wishlistService" name="defaultWishlistService" />
+	<bean id="defaultWishlistService" class="de.hybris.platform.wishlist2.impl.DefaultWishlist2Service" parent="abstractBusinessService"
+		scope="tenant">
+		<property name="wishlistDao" ref="wishlistDao"/>
+		<property name="saveAnonymousWishlists" value="false"/>
+	</bean>
+ -->
+
+<!--  	<alias alias="wishlistService" name="enhancedWishlistService" />
+	<bean id="enhancedWishlistService" class="com.twc.wishlist.addon.service.EnhancedWishlistServiceImpl" parent="defaultWishlistService"
+		scope="tenant">
+		<property name="wishlistDao" ref="wishlistDao"/>
+		<property name="saveAnonymousWishlists" value="false"/>
+		<property name="wishlistDao" ref="wishlistDao"/>
+	</bean> -->
+
+
+
+
+<!--  	<alias alias="wishlistService" name="enhancedWishlistService" />
+	<bean id="enhancedWishlistService" class="com.twc.wishlist.addon.service.EnhancedWishlistServiceImpl" parent="defaultWishlistService"
+		scope="tenant"> -->
+<!-- 		<property name="wishlistDao" ref="wishlistDao"/>
+		<property name="saveAnonymousWishlists" value="false"/>
+		<property name="wishlistDao" ref="wishlistDao"/>
+	</bean> -->
+	
+	<!-- 
+		<alias alias="wishlistDao" name="enhancedWishlistDao" />
+	<bean id="enhancedWishlistDao" class="com.twc.wishlist.addon.dao.EnhancedWishListDaoImpl" parent="defaultWishlistDao"
+		scope="tenant" />
+		
+	 -->
+</beans>

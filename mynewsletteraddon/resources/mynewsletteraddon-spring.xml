@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2015 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/> 
+ 		<context:component-scan base-package="com.twc" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver"/>
+ 		  <context:component-scan base-package="com.twc.cmscomponents.controllers" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
+ 		
+	<bean id="mynewsletteraddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+				<!--
+								<value>B2B</value>
+				-->
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false"/>
+				<property name="baseExtensionName" value="mynewsletteraddon"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="mynewsletteraddonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
+		<property name="extensionName" value="mynewsletteraddon" />
+	</bean>
+	
+	
+	<!-- 
+    <bean id="generateNewsletterSubsConfirmationEmail" parent="abstractGenerateEmailAction">
+        <property name="frontendTemplateName" value="NewsletterSubsConfirmationEmailTemplate"/>
+    </bean>
+  
+	    <bean id="newsletterSubsConfirmationEmailProcessDefinitionResource"
+          class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+        <property name="resource" value="classpath:/mynewsletteraddon/import/processes/newsletterSubsConfirmationEmailProcess.xml"/>
+    </bean>
+
+ -->
+	
+	
+	   <bean id="NewsLetterSubscriptionEventListener"
+          class="com.twc.cmscomponent.listener.NewsletterSubscriptionListener" parent="abstractSiteEventListener">
+        <property name="modelService" ref="modelService"/>
+        <property name="businessProcessService" ref="businessProcessService"/>
+    </bean>
+
+		<bean id="NewsLetterSubscriptionEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+	      
+	      
+			<property name="resource" value="classpath:/mynewsletteraddon/processes/newsLetterSubScripitonProcess.xml"/>
+ </bean>
+	
+<!-- /mynewsletteraddon/resources/mynewsletteraddon/processes/newsletterSubsConfirmationEmailProcess.xml
+ -->
+ 	<!-- <property name="resource" value="classpath:/mynewsletteraddon/resources/processes/newsletterSubsConfirmationEmailProcess.xml"/>
+ -->
+		<bean id="generateNewsLetterSubscriptionEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="NewsLetterSubscriptionEmailTemplate"/>
+	</bean>
+	
+	<bean id="newsLetterSubscriptionEmailContext" class="com.twc.cmscomponents.facades.email.context.NewsLetterSubscriptionEmailContext"
+	parent="abstractEmailContext" scope="prototype">
+	
+	</bean>
+	
+
+</beans>

@@ -1,0 +1,22 @@
+$contentCatalog=hybrisContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$picture=media(code, $contentCV);
+   
+$siteResource=jar:de.hybris.merchandise.initialdata.setup.InitialDataSystemSetup&/merchandiseinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+ 
+# $jarResourceCms=jar:com.jpard.constants.WishlistaddonConstants&/wishlistaddon/import/cockpit/cmscockpit
+$siteResource=jar:com.twc.constants.MynewsletteraddonConstants&/mynewsletteraddon/import/contentCatalogs/hybrisContentCatalog
+# Language
+$lang=en
+   
+
+   
+# CMS Link Components
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=$lang]
+;;AccountNewsLetterLink;"News Letters"
+
+ 
+   
+# CMS Navigation Nodes
+INSERT_UPDATE CMSNavigationNode;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+;;AccountNewsLetterNavNode;"News Letters "

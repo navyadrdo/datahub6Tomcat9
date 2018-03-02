@@ -1,0 +1,82 @@
+## messageSource=classpath:/mynewsletteraddon/messages/email-newsletterSubsConfirmation_$lang.properties
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#666666">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+
+<html>
+   <head>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+       <title>${ctx.messages.automaticMessage}</title>
+   </head>
+   <body bgcolor="#f7f7f7">
+	    <center>
+            <table cellpadding="0" cellspacing="0" width="619" bgcolor="#ffffff" style="border: 1px solid #d9d9d9; font-family: Arial; color: #9C9B9B; font-size: 12px;">
+                <tr>
+                    <td width="745">
+                        <table cellpadding="0" cellspacing="0" align="center">
+            			    <tr>
+            				    <td width="729" align="center"><img src="${ctx.themeResourceUrl}/images/fejlec.png" width="100%" alt=""/></td>
+               		        </tr>
+            			</table>
+            		</td>
+            	</tr>
+            	<tr>
+                    <td colspan="5" style="font-family:Arial, Helvetica, sans-serif; font-size: 14px; color: #000000;">
+                        <table align="left">
+                            <tbody>
+                                <tr>
+                                    <td align="left" style="font-family:Arial, Helvetica, sans-serif; font-size: 14px; color: #000000;padding-left: 20px;">
+                                       
+                                        #if(${ctx.titleCode})
+                                           <p>${ctx.messages.getMessage('greetingName',${ctx.titleCode}, ${ctx.lastName},${ctx.firstName})}</p>
+                                         #else
+                                             <p>${ctx.messages.getMessage('greetingNameWithOutTitle',${ctx.lastName},${ctx.firstName})}</p>
+                                         #end 
+                                      
+                                        
+                                        
+                  
+                                        <p>${ctx.messages.getMessage('newSubscriberEmail',${ctx.email})}</p>
+                                        <p><table width="570" cellpadding="0" cellspacing="0" border="0">
+												<tr>
+													<a href="${ctx.subsConfirmationURL}">${ctx.messages.text1}</a> 
+												</tr>
+											</table>
+										</p>
+										
+                                        <p style="display:inline">${ctx.messages.text2}&nbsp;<a href="${ctx.secureBaseUrl}/promotions/${ctx.messages.trackingCode}" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #555555; text-decoration: none;"><span style="color: #044481">${ctx.messages.trackingCode1}</span></a></p>
+                                         <p style="display:inline">${ctx.messages.registerFirst}&nbsp;<a href="${ctx.secureBaseUrl}/${ctx.messages.trackingCode}">${ctx.messages.site}</a>&nbsp;${ctx.messages.text3} <a href="${ctx.secureBaseUrl}/login/${ctx.messages.trackingCode}" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #555555; text-decoration: none;"><span style="color: #044481">${ctx.messages.trackingCode2}</span></a></p>
+                                       
+                                        $ctx.cmsSlotContents.BottomContent.replace("baseUrl", ${ctx.secureBaseUrl})
+                                    </td>
+
+                                     <tr><td>&nbsp;</td></tr>
+                                </tr>
+                        </table>
+                        <table cellpadding="0" cellspacing="0" background="${ctx.themeResourceUrl}/images/lablec.png" width="729">
+                            <tr>
+                                <td align="center" height="41" width="170" ><span style="color: #555555"><a href="${ctx.secureBaseUrl}/promotions/${ctx.messages.trackingCode}" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #555555; text-decoration: none;">Aktuális <span style="color: #044481">akciónk</span></a></span></td>
+
+                                <td align="center" height="41" width="205"><a href="${ctx.secureBaseUrl}/ujsag/${ctx.messages.trackingCode}" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #555555; text-decoration: none;">Aktuális <span style="color: #044481">reklámújság</span></a></td>
+
+                                <td align="center" height="41" width="242"><a href="${ctx.secureBaseUrl}/store-finder/${ctx.messages.trackingCode}" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #555555; text-decoration: none;">Üzleteink <span style="color: #044481">elérhetősége</span></a></td>
+                            </tr>
+                        </table>
+                        <table cellpadding="0" cellspacing="0" align="center">
+                            <tr>
+                                <td width="729"  background="${ctx.themeResourceUrl}/images/bottom.png"align="center"><a href="${ctx.secureBaseUrl}/${ctx.messages.trackingCode}" style="font-family:Arial, Helvetica, sans-serif; font-size: 12px; color: #FFFFFF; text-decoration: none;">www.euronics.hu<span style="color: #044481"></span></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>
+</html>

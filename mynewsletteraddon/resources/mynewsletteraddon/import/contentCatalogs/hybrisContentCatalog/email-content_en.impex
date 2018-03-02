@@ -1,0 +1,26 @@
+#
+# Import the CMS content for the Euronics site emails
+#
+$contentCatalog=hybrisContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# Import config properties into impex macros for modulegen
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$Customer_Service_Email=$config-Customer_Service_Email
+
+# Import config properties into impex macros for modulegen
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$emailResource=$config-vmEmailResourceValue
+
+# Language
+$lang=en
+
+# CMS components and Email velocity templates
+
+UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+ ;hybris_Email_Newsletter_Subs_Confirmation_Subject;"Newsletter Subs Confirmation Email Subject";$emailResource/email-newsletterSubsConfirmationSubject.vm
+ ;hybris_Email_Newsletter_Subs_Confirmation_Body;"Newsletter Subs Confirmation Email Body";$emailResource/email-newsletterSubsConfirmationBody.vm
+# Email Pages
+
+UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];fromEmail[lang=$lang, default=$Customer_Service_Email];fromName[lang=$lang]
+ ;;newsLetterSubScriptionEmail;;"Customer Services Team"
