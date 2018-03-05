@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="GenderList" elementtype="Gender" autocreate="true" generate="true" type="list"/>
+		<collectiontype code="SwatchColorSet" elementtype="SwatchColorEnum" autocreate="true" generate="true"
+		                type="set"/>
+	
+	<collectiontype code="CustomOfferLinksList" elementtype="CMSLinkComponent" autocreate="true" generate="true" type="list" />
+	</collectiontypes>
+
+
+	<enumtypes>
+		<enumtype generate="true" code="SwatchColorEnum" autocreate="true" dynamic="true">
+			<value code="BLACK"/>
+			<value code="BLUE"/>
+			<value code="BROWN"/>
+			<value code="GREEN"/>
+			<value code="GREY"/>
+			<value code="ORANGE"/>
+			<value code="PINK"/>
+			<value code="PURPLE"/>
+			<value code="RED"/>
+			<value code="SILVER"/>
+			<value code="WHITE"/>
+			<value code="YELLOW"/>
+		</enumtype>
+		
+        <enumtype code="StadiumType" autocreate="true" generate="true" dynamic="false">
+            <value code="openair"/>
+            <value code="enclosed"/>
+        </enumtype>
+        <enumtype code="StadiumAccess" autocreate="true" generate="true" dynamic="true">
+            <value code="road"/>
+            <value code="rail"/>
+            <value code="plane"/>
+        </enumtype>
+ 	
+		
+				<enumtype code="ExtendedWarrantyTypeEnum" autocreate="true" generate="true">
+			<value code="WARRANTY"/>
+			<value code="INSURANCE"/>
+		</enumtype>
+
+	</enumtypes>
+	
+	
+	
+	<relations>
+			<relation localized="false" code="product2promotion" generate="true" autocreate="true">
+				<sourceElement type="Product"  qualifier="code" cardinality="one"></sourceElement>
+				<targetElement type="mypromotion" qualifier="productid" cardinality="many" collectiontype="set"></targetElement>
+			</relation> 
+			
+			<relation code="ExtendedWarrantyGroup2ExtendedWarranty" generate="true"
+				  localized="false" autocreate="true">
+			<sourceElement qualifier="extendedWarrantyGroup" type="ExtendedWarrantyGroup"
+						   cardinality="one" >
+			</sourceElement>
+			<targetElement qualifier="extendedWarranties" type="ExtendedWarranty"
+						   cardinality="many" collectiontype="collection">
+			</targetElement> 
+			</relation>
+			
+<!-- 			
+        <relation code="StadiumProductRelation"
+                localized="false" generate="true" autocreate="true">
+            <sourceElement type="Product" qualifier="code" cardinality="one"/>
+            <targetElement type="Stadium"  qualifier="stadium" cardinality="many"/>
+             -->
+            
+<!-- 	   </relation>
+ -->			
+			
+			
+			
+			
+	   <relation code="Product2warranty" generate="true" localized="false" autocreate="true">
+					<sourceElement qualifier="product" type="Product" cardinality="one">
+						<modifiers optional="false" unique="true"/>
+					</sourceElement>
+					<targetElement qualifier="MyWarranty" type="MyWarranty"	cardinality="many" collectiontype="set">
+			</targetElement>
+		</relation>
+		
+		
+		
+
+
+	   <relation code="dept2emp" generate="true" localized="false" autocreate="true">
+					<sourceElement qualifier="deptcode" type="DepartmentTest" cardinality="one">
+					<modifiers optional="false" unique="true"/>
+					</sourceElement>
+					<targetElement qualifier="remp" type="EmployeeTest"	cardinality="many">
+			</targetElement>
+		</relation>		
+		
+	
+	
+	
+	<!--    <relation code="dept2emp" generate="true" localized="false" autocreate="true">
+					<sourceElement qualifier="deptcode" type="DepartmentTest" cardinality="one">
+					<modifiers optional="false" unique="true"/>
+					</sourceElement>
+					<targetElement qualifier="remp" type="EmployeeTest"	cardinality="many">
+			</targetElement>
+		</relation>		
+		
+			
+	 -->	<!-- 	
+			<relation code="product2warranty" generate="true"
+				  localized="false" autocreate="true">
+			<sourceElement qualifier="product" type="Product"
+						   cardinality="one" >
+			</sourceElement>
+			<targetElement qualifier="extendedWarranties" type="ExtendedWarranty"
+						   cardinality="many" collectiontype="collection">
+			</targetElement>
+			
+			
+			
+			
+			
+								</relation>
+			
+		 -->	
+			
+			 
+		
+	
+<!-- 			<relation localized="false" code="product2warrenty" generate="true" autocreate="true">
+				<sourceElement type="product" cardinality="one"></sourceElement>
+				<targetElement type="Warenties" cardinality="many"></targetElement>
+			</relation> -->
+			
+			<!-- one to manay relation ship with out specifing the  parent coloumn.
+			 -->
+			
+<!-- 			<relation localized="false" code="LeaderShip2LeaderShipImageRelation" generate="true" autocreate="true">
+				<sourceElement type="leaderShipComponent" cardinality="one" qualifier="code"></sourceElement>
+				<targetElement type="LeaderShipImageComponent" qualifier="leaderShip" cardinality="many" collectiontype="list"></targetElement>
+			</relation>  -->
+			
+			
+	</relations>
+
+
+
+
+	<itemtypes>
+
+		<!-- Add your item definitions here -->
+
+
+		<!-- TypeGroups are for structure of this file only -->
+
+ 		<typegroup name="Apparel">
+			<itemtype code="ApparelProduct" extends="Product"
+			          autocreate="true" generate="true"
+			          jaloclass="com.twc.core.jalo.ApparelProduct">
+				<description>Base apparel product extension that contains additional attributes.</description>
+				<attributes>
+					<attribute qualifier="genders" type="GenderList">
+						<description>List of genders that the ApparelProduct is designed for</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+ 
+ 			<itemtype code="ApparelStyleVariantProduct" extends="VariantProduct"
+			          autocreate="true" generate="true"
+			          jaloclass="com.twc.core.jalo.ApparelStyleVariantProduct">
+				<description>Apparel style variant type that contains additional attribute describing variant style.
+				</description>
+				<attributes>
+					<attribute qualifier="style" type="localized:java.lang.String"
+					           metatype="VariantAttributeDescriptor">
+						<description>Color/Pattern of the product.</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+
+					<attribute qualifier="swatchColors" type="SwatchColorSet">
+						<description>A normalized color mapping to a standardized front-end navigable name.
+						</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+
+			</itemtype>
+
+			<itemtype code="ApparelSizeVariantProduct" extends="ApparelStyleVariantProduct"
+			          autocreate="true" generate="true"
+			          jaloclass="com.twc.core.jalo.ApparelSizeVariantProduct">
+				<description>Apparel size variant type that contains additional attribute describing variant size.
+				</description>
+				<attributes>
+					<attribute qualifier="size" type="localized:java.lang.String"
+					           metatype="VariantAttributeDescriptor">
+						<description>Size of the product.</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup> 
+
+
+		<typegroup name="Electronics">
+			<itemtype code="ElectronicsColorVariantProduct" extends="VariantProduct"
+          autocreate="true" generate="true"
+          jaloclass="com.twc.core.jalo.ElectronicsColorVariantProduct">
+				 <description>Electronics color variant type that contains additional attribute describing variant color.
+				</description>
+				<attributes>
+					<attribute qualifier="color" type="localized:java.lang.String"
+					           metatype="VariantAttributeDescriptor">
+						<description>Color of the product.</description>
+						<modifiers/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup> 
+		
+		
+	<typegroup name="mb">
+	
+	<itemtype code="Product" autocreate="false" generate="false">
+		<description>Extending the Product type from core with additional attributes.</description>
+		<attributes>
+			<attribute qualifier="internalOnly" type="java.lang.Boolean" autocreate="true">
+				<description>Defines if the product should be sold to hybris employees only.</description>
+				<persistence type="property" />
+			</attribute>
+			<attribute type="java.lang.String" qualifier="erpOriginalId" autocreate="true">
+				<persistence type="property"></persistence>
+			</attribute>
+			<attribute type="java.lang.String" qualifier="erpName" autocreate="true">
+				<persistence type="property"></persistence>
+			</attribute>
+			<attribute autocreate="true" qualifier="myalias" type="java.lang.String"
+				generate="true">
+				<persistence type="property" />
+				<modifiers read="true" write="true" search="true" initial="true"
+					optional="true" unique="false" />
+			</attribute>
+
+		</attributes>
+	</itemtype>
+ 
+ 
+            <itemtype code="offerproducts" autocreate="true"  generate="true" extends="product">
+            <attributes>
+            <attribute type="java.lang.String" qualifier="productNo">
+            <persistence type="property"></persistence>
+            </attribute>
+            <attribute type="java.lang.String" qualifier="offerDesc"><persistence type="property"></persistence></attribute>
+            <attribute type="java.lang.String" qualifier="offerLongDesc"><persistence type="property"></persistence></attribute>
+            </attributes>
+            </itemtype>
+            
+            
+            <itemtype code="mypromotion" autocreate="true" generate="true" extends="GenericItem">
+            <deployment table="MyPromotion" typecode="10088"/>
+            <attributes>
+            <attribute type="java.lang.String" qualifier="productid">
+            <persistence type="property"></persistence>
+            </attribute>
+            
+            <attribute type="java.lang.String" qualifier="promtionname">
+            <persistence type="property"></persistence>
+            </attribute>
+            
+            <attribute type="java.lang.String" qualifier="promotionDesc">
+            <persistence type="property"></persistence>
+            </attribute>
+            
+            <attribute type="java.lang.String" qualifier="promotionLongDes">
+            <persistence type="property"></persistence>
+                 
+            </attribute>
+            
+            <attribute type="java.lang.Boolean" qualifier="isActive">
+            <persistence type="property"></persistence>
+            <defaultvalue>Boolean.FALSE</defaultvalue>
+            </attribute>
+            </attributes>
+            </itemtype>
+ 
+ 
+                    <itemtype code="Warenties" extends="GenericItem" generate="true" autocreate="true">
+                    <deployment table="mb_Warenties" typecode="10089"/>
+                    <attributes>
+                    <attribute type="java.lang.String" qualifier="Wno">
+                    <persistence type="property"></persistence>
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="Wname">
+                    <persistence type="property"></persistence>
+                    </attribute>
+                    <attribute type="java.lang.String" qualifier="Status">
+                    <persistence type="property"></persistence>
+                    <defaultvalue>"approved"</defaultvalue>
+                    </attribute>
+                    
+                    </attributes>
+                    
+                    
+                    
+                    </itemtype>
+ 
+ 
+ 	<!-- registration  step 1-->
+            <itemtype code="Customer" generate="false" autocreate="false">
+                <attributes>
+                    <attribute qualifier="isInternal" type="java.lang.Boolean">
+                        <description>Defines if the customer is a hybris internal employee. Aggregated information</description>
+                        <persistence type="dynamic" attributeHandler="dynamicHybrisCustomerAttributeBean" />
+                        <modifiers read="true" write="true" optional="true"
+                            unique="false" />
+                    </attribute>
+              
+                    <attribute type="java.lang.String" qualifier="phoneNo">
+                    <description> phone no for the user while registration </description>
+                    <persistence type="property"></persistence>
+                    <modifiers read="true" write="true" optional="true" unique="true"/>
+                    </attribute>
+                    
+                    <attribute type="java.lang.String" qualifier="zipCode">
+                    <description>Zip code for customer</description>
+                    <persistence type="property"></persistence>
+                    <modifiers read="true" write="true" optional="true"/>
+                    </attribute>
+                    
+                </attributes>
+                
+                
+            </itemtype>
+            
+            
+            <itemtype code="CustomOffersComponent" extends="SimpleCMSComponent" generate="true" autocreate="true"
+            jaloclass="com.twc.core.jalo.CustomOffersComponent">
+            <description>Used to display offers on homepage</description>
+                <attributes>
+                    <attribute type="localized:java.lang.String" qualifier="headrerText">
+                        <modifiers read="true" write="true" optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="localized:java.lang.String" qualifier="footerText">
+                        <modifiers read="true" write="true" optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="Media" qualifier="offerImage">
+                        <modifiers read="true" write="true" optional="true" />
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute type="CustomOfferLinksList" qualifier="offerImageLink">
+                        <persistence type="property" />
+                        <description>List of CMS Link Component</description>
+                        <modifiers read="true" write="true" optional="true"/>
+                    </attribute>
+                </attributes>
+                
+            </itemtype>
+            
+<!--   leadership one to many  ##############################################################################################################-->          
+       <!--  child component -->    
+            
+<!--              <itemtype code="LeaderShipImageComponent"
+	autocreate="true" generate="true" extends="CMSImageComponent">
+	<deployment table="LeaderShipImage" typecode="12321"/>
+	<attributes>
+
+        <attribute type="java.lang.String" qualifier="code">
+			<persistence type="property"></persistence>
+		</attribute>
+
+
+	   
+		<attribute type="localized:java.lang.String" qualifier="lsname">
+			<persistence type="property"></persistence>
+		</attribute>
+		<attribute type="Media" qualifier="lsmedia">
+			<persistence type="property"></persistence>
+		</attribute>
+
+	</attributes>
+</itemtype>
+             
+             parent component
+
+	<itemtype code="LeaderShipComponent" autocreate="true"
+		generate="true" extends="CMSImageComponent">
+		<deployment table="LeaderShip" typecode="12345"/>
+		<attributes>
+			<attribute type="localized:java.lang.String" qualifier="heading">
+				<persistence type="property"></persistence>
+			</attribute>
+		</attributes>
+	</itemtype>
+            -->  
+<!--   leadership one to many  ##############################################################################################################-->                
+             
+
+
+            
+            
+            	<itemtype code="ExtendedWarrantyGroup" autocreate="true" generate="true">
+				<deployment table="ExtendedWarrantyGroup" typecode="12108" />
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String" >
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="description" type="java.lang.String" >
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+            
+            
+            
+            
+            
+            <itemtype code="ExtendedWarranty" autocreate="true" generate="true" extends="Product">
+				<attributes>
+					<attribute qualifier="extendedWarrantyType" type="ExtendedWarrantyTypeEnum">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="numberOfMonths" type="java.lang.Integer" >
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="fromPrice" type="java.lang.Double" >
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="toPrice" type="java.lang.Double" >
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+                    <attribute qualifier="netWeight" type="java.lang.Double">
+                        <persistence type="property"/>
+                        <modifiers write="false" initial="true"/>
+                        <defaultvalue>
+                            java.lang.Double.valueOf(0.0)
+                        </defaultvalue>
+                    </attribute>
+                    <attribute qualifier="grossWeight" type="java.lang.Double">
+                        <persistence type="property"/>
+                        <modifiers write="false" initial="true"/>
+                        <defaultvalue>
+                            java.lang.Double.valueOf(0.0)
+                        </defaultvalue>
+                    </attribute>
+                    <attribute qualifier="volume" type="java.lang.Double">
+                        <persistence type="property"/>
+                        <modifiers write="false" initial="true"/>
+                        <defaultvalue>
+                            java.lang.Double.valueOf(0.0)
+                        </defaultvalue>
+                    </attribute>
+                    <attribute qualifier="length" type="java.lang.Double">
+                        <persistence type="property"/>
+                        <modifiers write="false" initial="true"/>
+                        <defaultvalue>
+                            java.lang.Double.valueOf(0.0)
+                        </defaultvalue>
+                    </attribute>
+                    <attribute qualifier="width" type="java.lang.Double">
+                        <persistence type="property"/>
+                        <modifiers write="false" initial="true"/>
+                        <defaultvalue>
+                            java.lang.Double.valueOf(0.0)
+                        </defaultvalue>
+                    </attribute>
+                    <attribute qualifier="height" type="java.lang.Double">
+                        <persistence type="property"/>
+                        <modifiers write="false" initial="true"/>
+                        <defaultvalue>
+                            java.lang.Double.valueOf(0.0)
+                        </defaultvalue>
+                    </attribute>
+				</attributes>
+			</itemtype>
+            
+            
+            
+            
+
+
+
+
+    <itemtype code="MyWarranty" autocreate="true" generate="true" extends="Product">
+    
+    
+    
+				<attributes>
+					<attribute qualifier="warrantyCode" type="java.lang.String" >
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+				
+					<attribute qualifier="warrantyMonths" type="java.lang.String" >
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="warrantyPrice" type="java.lang.Double" >
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					</attributes>
+			</itemtype>
+            
+            
+            
+       <!--  Insert_Update  MyWarranty;warrantyCode;warrantyMonths;warrantyPrice;product(code)
+        -->     
+            
+<!--        
+# ImpEx for Importing Products
+
+# Macros / Replacement Parameter definitions
+$productCatalog=mbProductCatalog
+$productCatalogName=MotlonBrown Product Catalog
+$lang=en
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='check']
+$taxGroup=Europe1PriceFactory_PTG(code)[default=jp-vat-full]
+
+
+       INSERT_UPDATE  MyWarranty;warrantyCode[unique=true];warrantymonths;warrantyPrice;Product(code);$catalogVersion;code
+       ;w001;12;1200;0001;;000400 
+
+ -->
+  
+    
+        <itemtype code="Stadium" generate="true" autocreate="true">
+       <deployment table="Stadium" typecode="12123" />
+            <attributes>
+                <attribute qualifier="code" type="java.lang.String" >
+                    <persistence type="property"/>
+                    <modifiers optional="false" unique="false"/>
+                </attribute>
+                <attribute qualifier="capacity" type="java.lang.Integer">
+                    <description>Capacity</description>
+                    <persistence type="property" />
+                </attribute>
+                <attribute type="StadiumType" qualifier="StadiumType">
+                    <persistence type="property"/>
+                    <defaultvalue>em().getEnumerationValue("StadiumType","openair")</defaultvalue>
+                </attribute>
+            </attributes>
+        </itemtype>
+        
+        
+        
+        
+        
+       
+       
+        <itemtype code="DepartmentTest" generate="true" autocreate="true">
+       <deployment table="mb_dept" typecode="12130" />
+            <attributes>
+                <attribute qualifier="deptcode" type="java.lang.String" >
+                    <persistence type="property"/>
+                    <modifiers optional="false" unique="false"/>
+                </attribute>
+                <attribute qualifier="deptname" type="java.lang.String">
+                    <description>Capacity</description>
+                    <persistence type="property" />
+                </attribute>
+               </attributes>
+        </itemtype>
+        
+        <!-- Table infomation
+        
+        
+Insert_Update DepartmentTest;deptcode[unique=true];deptname
+;101;Humanresouce
+;102;Finance
+;103;Marketing
+;104;Admin -->
+        
+        
+        
+        
+        
+        <itemtype code="EmployeeTest" generate="true" autocreate="true">
+       <deployment table="mb_emp" typecode="12131" />
+            <attributes>
+                <attribute qualifier="Empid" type="java.lang.String" >
+                    <persistence type="property"/>
+                    <modifiers optional="false" unique="false"/>
+                </attribute>
+                <attribute qualifier="empname" type="java.lang.String">
+                    <description>Capacity</description>
+                    <persistence type="property" />
+                </attribute>
+               </attributes>
+        </itemtype>
+        
+        
+        
+        
+    
+    
+
+<!-- Insert_Update EmployeeTest;Empid[unique=true];empname;deptcode(deptcode)
+;Emp001;naagendra;101
+;Emp002;naagendra1;102
+;Emp003;naagendra2;103
+ -->    
+ 
+ 
+ 
+ <!-- 
+ Relationship followed 
+ 
+ 
+ 
+    <relation code="dept2emp" generate="true" localized="false" autocreate="true">
+					<sourceElement qualifier="deptcode" type="DepartmentTest" cardinality="one">
+					<modifiers optional="false" unique="true"/>
+					</sourceElement>
+					<targetElement qualifier="remp" type="EmployeeTest"	cardinality="many">
+			</targetElement>
+		</relation>		
+	 -->    
+	 
+	 
+	 	<itemtype code="CronJobLastRun" autocreate="true" generate="true">
+		<deployment table="CronJobLastRun" typecode="30461" />
+		<attributes>
+			<attribute type="java.lang.String" qualifier="jobname">
+				<modifiers optional="false" unique="true" />
+				<persistence type="property" />
+			</attribute>
+			<attribute qualifier="lastRunDate" type="java.util.Date">
+				<persistence type="property" />
+			</attribute>
+			<attribute qualifier="lastSuccessRunDate" type="java.util.Date">
+				<persistence type="property" />
+			</attribute>
+			<attribute qualifier="lastFailedRunDate" type="java.util.Date">
+				<persistence type="property" />
+			</attribute>
+			<attribute type="java.lang.String" qualifier="result">
+				<persistence type="property" />
+			</attribute>
+		</attributes>
+		
+		
+		
+		
+		
+		
+	</itemtype>
+
+        <itemtype code="ExportCronJob" extends="CronJob" abstract="true">
+            <attributes>
+                <attribute qualifier="exportHookBeanName" type="java.lang.String">
+                    <persistence type="property"/>
+                    <modifiers optional="true"/>
+                </attribute>
+                <attribute qualifier="timestampFormatConfigKey" type="java.lang.String">
+                    <persistence type="property"/>
+                    <modifiers optional="true"/>
+                </attribute>
+                <attribute qualifier="outputFilePatternConfigKey" type="java.lang.String">
+                    <persistence type="property"/>
+                    <modifiers optional="false"/>
+                </attribute>
+                <attribute qualifier="outputFolderPathConfigKey" type="java.lang.String">
+                    <persistence type="property"/>
+                    <modifiers optional="false"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+        
+     
+     
+
+        <itemtype code="CSVExportCronJob" extends="ExportCronJob">
+            <deployment table="CSVExportCronJob" typecode="10112"/>
+            <attributes>
+                <attribute qualifier="exportJobName" type="java.lang.String">
+                    <persistence type="property"/>
+                    <modifiers optional="false"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+        
+        
+        
+   <itemtype code="PhonePrefix" autocreate="true" generate="true">
+	<deployment table="PhonePrefix" typecode="10113" />
+	<attributes>
+		<attribute type="java.lang.String" qualifier="PrefixCode">
+			<persistence type="property"></persistence>
+			<modifiers optional="true" read="true" write="true"  unique="false"/>
+		</attribute>
+	</attributes>
+</itemtype>
+           
+        
+        
+        
+	 
+        </typegroup>
+		</itemtypes>
+	
+</items>

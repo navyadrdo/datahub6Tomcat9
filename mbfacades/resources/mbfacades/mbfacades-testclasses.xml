@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testclasses><mbfacades><testclass>com.twc.facades.suggestion.DefaultSimpleSuggestionFacadeIntegrationTest</testclass><testclass>com.twc.facades.suggestion.impl.DefaultSimpleSuggestionFacadeTest</testclass></mbfacades></testclasses>
