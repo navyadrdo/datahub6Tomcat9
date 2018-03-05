@@ -1,0 +1,57 @@
+defaultProductBasicPopulator
+
+
+
+
+<alias name="defaultProductBasicPopulator" alias="productBasicPopulator"/>
+	<bean id="defaultProductBasicPopulator" parent="baseProductPopulator"
+			class="de.hybris.platform.commercefacades.product.converters.populator.ProductBasicPopulator"/>
+
+			
+			
+
+  
+    <alias name="euronicsProductBasicPopulator" alias="productBasicPopulator"/>
+    <bean id="euronicsProductBasicPopulator" parent="defaultProductBasicPopulator" class="hu.euronics.facades.populators.EuronicsProductBasicPopulator">
+    	<property name="commonI18NService" ref="commonI18NService"/>
+    </bean>
+    
+
+
+
+	
+	public class ProductBasicPopulator<SOURCE extends ProductModel, TARGET extends ProductData> extends
+		AbstractProductPopulator<SOURCE, TARGET>
+{
+	@Override
+	public void populate(final SOURCE productModel, final TARGET productData) throws ConversionException
+	{
+		
+		}
+		
+		
+}
+
+public class EuronicsProductBasicPopulator extends ProductBasicPopulator<ProductModel, ProductData>{
+	
+	private CommonI18NService commonI18NService;
+	
+	@Override
+	public void populate(final ProductModel productModel, final ProductData productData) throws ConversionException {
+		super.populate(productModel, productData);		
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
