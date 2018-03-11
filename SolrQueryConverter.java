@@ -1,8 +1,4 @@
-package hu.euronics.core.search.solrfacetsearch.converter;
 
-import de.hybris.platform.solrfacetsearch.search.RawQuery;
-import de.hybris.platform.solrfacetsearch.search.SearchQuery;
-import de.hybris.platform.solrfacetsearch.search.impl.DefaultSolrQueryConverter;
 import de.hybris.platform.solrfacetsearch.search.SearchQuery.Operator;
 
 
@@ -15,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by janos.resz@jpard.com on 11/24/2015.
+
  */
-public class EuronicsSolrQueryConverter extends DefaultSolrQueryConverter {
+public class SolrQueryConverter extends DefaultSolrQueryConverter {
     private static final Logger LOG = LoggerFactory.getLogger(EuronicsSolrQueryConverter.class);
     private static final SearchQuery.Operator DEFAULT_FIELD_OPERATOR = Operator.AND;
     private static final String PRICE_VALUE = "priceValue";
