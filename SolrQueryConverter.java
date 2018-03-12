@@ -14,7 +14,7 @@ import java.util.List;
 
  */
 public class SolrQueryConverter extends DefaultSolrQueryConverter {
-    private static final Logger LOG = LoggerFactory.getLogger(EuronicsSolrQueryConverter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SolrQueryConverter.class);
     private static final SearchQuery.Operator DEFAULT_FIELD_OPERATOR = Operator.AND;
     private static final String PRICE_VALUE = "priceValue";
     private static final String SEARCH_EVERYTHING = "*:*";
